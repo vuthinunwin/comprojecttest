@@ -1,5 +1,6 @@
 <?php 
   session_start(); 
+  $db = mysqli_connect('localhost', 'root', '', 'comproject');
 
   if (!isset($_SESSION['username'])) {
   	$_SESSION['msg'] = "You must log in first";
@@ -36,13 +37,30 @@
   	<?php endif ?>
 
     <!-- logged in user information -->
-    <?php  if (isset($_SESSION['username'])) : ?>
-    	<p> Hi! <strong><?php echo $_SESSION['username']; ?></strong></p>
+    <?php   $username = $_SESSION['username'];
+            $check = "SELECT roles FROM users WHERE username = '$username'";
+            $sql = mysqli_query($db, $check);
+            $result= mysqli_fetch_assoc($sql);
+            ?>
+
+    <?php  if (isset($_SESSION['username']) && $result["roles"] == 'user' ) : ?>
+    	<p> Hi! <strong><?php echo $username; ?></strong></p>
         <br>
         <p> Concert Searching </p>
         <p> Concert Recommending </p>
         <p> Ticket Info </p>
-        <p> Update Info </p>
+        <p> <a href="updateinfo.php" style="color: blue;">Update Info </p>
+        <p> <a href="changepassword.php" style="color: blue;">Change Password </p>
+        <br>
+    	<p> <a href="index.php?logout='1'" style="color: red;">Logout</a> </p>
+    <?php endif ?>
+
+    <?php  if (isset($_SESSION['username']) && $result["roles"] == 'organizer' ) : ?>
+    	<p> Hi! <strong><?php echo $username; ?></strong></p>
+        <br>
+        <p> Create Concert  </p>
+        <p> Manage Concert </p>
+        <p> Update Contact </p>
         <p> <a href="changepassword.php" style="color: blue;">Change Password </p>
         <br>
     	<p> <a href="index.php?logout='1'" style="color: red;">Logout</a> </p>

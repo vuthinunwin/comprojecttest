@@ -26,6 +26,9 @@
   	<p>
   		Not yet a member? <a href="register.php">Sign up</a>
   	</p>
+  	<p>
+	  Want to create the event? <a href="organizer_signup.php">Organizer Sign up</a>
+	</p>
   </form>
 </body>
 </html>
